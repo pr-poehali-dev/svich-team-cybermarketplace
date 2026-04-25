@@ -98,19 +98,52 @@ function FlashTimer() {
   );
 }
 
+const PAYMENT_METHODS = [
+  {
+    id: "card",
+    icon: "💳",
+    label: "Банковская карта",
+    sub: "Visa / Mastercard / МИР",
+    color: "rgba(0,255,255,0.15)",
+    border: "rgba(0,255,255,0.3)",
+    glow: "rgba(0,255,255,0.2)",
+  },
+  {
+    id: "crypto",
+    icon: "₿",
+    label: "Криптовалюта",
+    sub: "USDT · BTC · ETH · TON",
+    color: "rgba(255,215,0,0.1)",
+    border: "rgba(255,215,0,0.35)",
+    glow: "rgba(255,215,0,0.2)",
+  },
+  {
+    id: "telegram",
+    icon: "✈️",
+    label: "Telegram Stars",
+    sub: "Оплата звёздами Telegram",
+    color: "rgba(123,47,190,0.15)",
+    border: "rgba(192,132,252,0.35)",
+    glow: "rgba(192,132,252,0.2)",
+  },
+];
+
 function BuyModal({ product, onClose }: { product: Product; onClose: () => void }) {
   const rarity = RARITY_CONFIG[product.rarity];
+  const [selectedPayment, setSelectedPayment] = useState("card");
 
   const handleBuy = () => {
     const link = product.buyLink || "https://t.me/Svichmefces";
     window.open(link, "_blank", "noopener,noreferrer");
   };
 
+  const selected = PAYMENT_METHODS.find(m => m.id === selectedPayment)!;
+
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4"
-      style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)" }}
+      style={{ background: "rgba(0,0,0,0.88)", backdropFilter: "blur(10px)" }}
       onClick={onClose}>
-      <div className="glass-card rounded-2xl w-full max-w-md relative animate-fade-in opacity-0"
+      <div className="glass-card rounded-2xl w-full max-w-md relative animate-fade-in opacity-0 overflow-y-auto max-h-[95vh]"
         style={{ animationFillMode: "forwards", border: "1px solid rgba(255,0,153,0.35)", boxShadow: "0 0 40px rgba(255,0,153,0.2), 0 0 80px rgba(123,47,190,0.1)" }}
         onClick={e => e.stopPropagation()}>
 
@@ -122,12 +155,13 @@ function BuyModal({ product, onClose }: { product: Product; onClose: () => void 
           <Icon name="X" size={14} className="text-white/60" />
         </button>
 
-        <div className="h-48 flex items-center justify-center relative overflow-hidden rounded-t-2xl"
+        {/* Шапка товара */}
+        <div className="h-44 flex items-center justify-center relative overflow-hidden rounded-t-2xl"
           style={{ background: "linear-gradient(135deg, rgba(13,13,26,0.95), rgba(40,15,65,0.9))" }}>
           <div className="absolute inset-0 cyber-grid opacity-60" />
           <div className="absolute inset-0"
             style={{ background: "radial-gradient(ellipse at center, rgba(255,0,153,0.15), transparent 70%)" }} />
-          <span className="text-8xl animate-float product-image-glow relative z-10">{product.image}</span>
+          <span className="text-7xl animate-float product-image-glow relative z-10">{product.image}</span>
           {product.isFlash && (
             <div className="absolute top-3 left-3 bg-gradient-to-r from-pink-600 to-purple-700 text-white font-orbitron text-[9px] font-bold tracking-widest px-2 py-0.5 rounded-sm uppercase">
               ⚡ Флеш -{product.discount}%
@@ -139,6 +173,7 @@ function BuyModal({ product, onClose }: { product: Product; onClose: () => void 
         </div>
 
         <div className="p-5 space-y-4">
+          {/* Название */}
           <div>
             <div className="flex items-center gap-2 mb-1.5">
               <span className={`text-[10px] font-orbitron font-bold border rounded-sm px-1.5 py-0.5 ${rarity.className}`}>
@@ -149,27 +184,55 @@ function BuyModal({ product, onClose }: { product: Product; onClose: () => void 
             <h2 className="font-rubik text-white font-bold text-lg leading-tight">{product.name}</h2>
           </div>
 
+          {/* Описание */}
           {product.description && (
-            <p className="text-white/55 text-sm font-rubik leading-relaxed">{product.description}</p>
+            <p className="text-white/50 text-sm font-rubik leading-relaxed">{product.description}</p>
           )}
 
+          {/* Доставка */}
           {product.delivery && (
             <div className="flex items-start gap-2.5 rounded-lg p-3"
-              style={{ background: "rgba(0,255,255,0.05)", border: "1px solid rgba(0,255,255,0.15)" }}>
-              <span className="text-base shrink-0">⚡</span>
+              style={{ background: "rgba(0,255,255,0.05)", border: "1px solid rgba(0,255,255,0.12)" }}>
+              <span className="text-sm shrink-0">⚡</span>
               <div>
-                <div className="font-orbitron text-[10px] text-white/50 uppercase tracking-wider mb-0.5">Доставка</div>
-                <div className="text-white/70 text-xs font-rubik">{product.delivery}</div>
+                <div className="font-orbitron text-[10px] text-white/40 uppercase tracking-wider mb-0.5">Доставка</div>
+                <div className="text-white/65 text-xs font-rubik">{product.delivery}</div>
               </div>
             </div>
           )}
 
-          <div className="flex items-center gap-1.5 py-1">
-            <span className="text-yellow-400 text-xs">{"★".repeat(Math.floor(product.sellerRating))}</span>
-            <span className="text-white/50 text-xs font-rubik">{product.seller}</span>
-            {product.verified && <span className="text-[9px] neon-text-cyan font-orbitron ml-1">VERIFIED</span>}
+          {/* Способы оплаты */}
+          <div>
+            <div className="font-orbitron text-[10px] text-white/40 uppercase tracking-wider mb-2.5">Способ оплаты</div>
+            <div className="space-y-2">
+              {PAYMENT_METHODS.map(method => (
+                <button key={method.id} onClick={() => setSelectedPayment(method.id)}
+                  className="w-full flex items-center gap-3 rounded-xl px-4 py-3 cursor-pointer border-0 transition-all text-left"
+                  style={{
+                    background: selectedPayment === method.id ? method.color : "rgba(255,255,255,0.02)",
+                    border: `1px solid ${selectedPayment === method.id ? method.border : "rgba(255,255,255,0.07)"}`,
+                    boxShadow: selectedPayment === method.id ? `0 0 15px ${method.glow}` : "none",
+                  }}>
+                  <span className="text-xl w-8 text-center">{method.icon}</span>
+                  <div className="flex-1">
+                    <div className="font-orbitron text-white text-xs font-semibold">{method.label}</div>
+                    <div className="text-white/40 text-[10px] font-rubik mt-0.5">{method.sub}</div>
+                  </div>
+                  <div className="w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-all"
+                    style={{
+                      borderColor: selectedPayment === method.id ? selected.border : "rgba(255,255,255,0.2)",
+                      background: selectedPayment === method.id ? method.border : "transparent",
+                    }}>
+                    {selectedPayment === method.id && (
+                      <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                    )}
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
 
+          {/* Цена + защита */}
           <div className="flex items-end justify-between pt-1">
             <div>
               <div className="price-tag text-white font-black text-2xl">{product.price.toLocaleString("ru-RU")} ₽</div>
@@ -179,19 +242,20 @@ function BuyModal({ product, onClose }: { product: Product; onClose: () => void 
             </div>
             <div className="text-right">
               <div className="text-white/30 text-[10px] font-rubik">Защита покупателя</div>
-              <div className="neon-text-green text-[10px] font-orbitron">🛡️ ГАРАНТИЯ</div>
+              <div className="text-green-400 text-[10px] font-orbitron">🛡️ ГАРАНТИЯ</div>
             </div>
           </div>
 
+          {/* Кнопка */}
           <button onClick={handleBuy}
             className="btn-cyber-pink w-full rounded-xl py-3.5 text-sm cursor-pointer flex items-center justify-center gap-2">
-            <span>Купить в Telegram</span>
+            <span>Перейти к оплате</span>
             <Icon name="ExternalLink" size={14} className="text-white/80" />
           </button>
 
-          <p className="text-white/25 text-[10px] font-rubik text-center leading-relaxed">
-            Нажимая «Купить», вы перейдёте в Telegram к продавцу.<br/>
-            Средства защищены до подтверждения получения товара.
+          <p className="text-white/20 text-[10px] font-rubik text-center leading-relaxed">
+            Вы будете перенаправлены в Telegram для подтверждения заказа.<br/>
+            Средства защищены до получения товара.
           </p>
         </div>
       </div>

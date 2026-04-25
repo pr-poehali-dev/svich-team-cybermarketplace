@@ -22,6 +22,9 @@ interface Product {
   isNew?: boolean;
   isFlash?: boolean;
   discount?: number;
+  buyLink?: string;
+  description?: string;
+  delivery?: string;
 }
 
 const RARITY_CONFIG: Record<Rarity, { label: string; className: string; icon: string }> = {
@@ -33,14 +36,14 @@ const RARITY_CONFIG: Record<Rarity, { label: string; className: string; icon: st
 };
 
 const PRODUCTS: Product[] = [
-  { id: 1, name: "Dragon Lore AWP", game: "CS2", category: "Скины", price: 2499, oldPrice: 3200, rarity: "legendary", server: "EU", seller: "PhantomTrader", sellerRating: 4.9, verified: true, image: "🐉", isFlash: true, discount: 22 },
-  { id: 2, name: "Аккаунт 50+ побед", game: "Valorant", category: "Аккаунты", price: 899, rarity: "epic", server: "RU", seller: "ValoMaster", sellerRating: 4.7, verified: true, image: "⚡", isNew: true },
-  { id: 3, name: "10 000 V-Bucks", game: "Fortnite", category: "Валюта", price: 349, oldPrice: 450, rarity: "rare", server: "Global", seller: "FortKing", sellerRating: 4.8, verified: false, image: "💰", isFlash: true, discount: 22 },
-  { id: 4, name: "Предвестник Хаоса", game: "Dota 2", category: "Предметы", price: 1299, rarity: "mythic", server: "RU/CIS", seller: "DotaGod_777", sellerRating: 5.0, verified: true, image: "⚔️", isNew: true },
-  { id: 5, name: "Буст до Платины", game: "CS2", category: "Услуги", price: 599, rarity: "rare", server: "EU", seller: "PhantomTrader", sellerRating: 4.9, verified: true, image: "🏆" },
-  { id: 6, name: "Скин AK-47 | Asiimov", game: "CS2", category: "Скины", price: 489, rarity: "epic", server: "EU", seller: "SkinVault", sellerRating: 4.6, verified: true, image: "🔫" },
-  { id: 7, name: "TF2 Mann Co. Keys x10", game: "TF2", category: "Предметы", price: 199, rarity: "common", server: "Global", seller: "KeyTrader", sellerRating: 4.5, verified: false, image: "🔑", isNew: true },
-  { id: 8, name: "Кристаллы 5000 шт", game: "Genshin Impact", category: "Валюта", price: 699, oldPrice: 900, rarity: "rare", server: "Asia", seller: "GenshinShop", sellerRating: 4.8, verified: true, image: "💎", isFlash: true, discount: 22 },
+  { id: 1, name: "Dragon Lore AWP", game: "CS2", category: "Скины", price: 2499, oldPrice: 3200, rarity: "legendary", server: "EU", seller: "PhantomTrader", sellerRating: 4.9, verified: true, image: "🐉", isFlash: true, discount: 22, description: "Легендарный скин AWP | Dragon Lore с уровнем износа Field-Tested. Один из самых редких скинов в CS2.", delivery: "Через Steam Trade Offer в течение 15 минут" },
+  { id: 2, name: "Аккаунт 50+ побед", game: "Valorant", category: "Аккаунты", price: 899, rarity: "epic", server: "RU", seller: "ValoMaster", sellerRating: 4.7, verified: true, image: "⚡", isNew: true, description: "Аккаунт Valorant с 50+ победами, разблокированными агентами и скинами. Сервер RU.", delivery: "Данные аккаунта передаются в чате в течение 10 минут" },
+  { id: 3, name: "10 000 V-Bucks", game: "Fortnite", category: "Валюта", price: 349, oldPrice: 450, rarity: "rare", server: "Global", seller: "FortKing", sellerRating: 4.8, verified: false, image: "💰", isFlash: true, discount: 22, buyLink: "https://t.me/Svichmefces", description: "10 000 V-Bucks для Fortnite. Подходит для покупки скинов, боевого пропуска и косметики в магазине.", delivery: "Пополнение через подарочную карту или аккаунт. До 30 минут." },
+  { id: 4, name: "Предвестник Хаоса", game: "Dota 2", category: "Предметы", price: 1299, rarity: "mythic", server: "RU/CIS", seller: "DotaGod_777", sellerRating: 5.0, verified: true, image: "⚔️", isNew: true, description: "Мифический сет Предвестник Хаоса для Invoker. Анимированные способности и эффекты убийства.", delivery: "Через Steam Trade Offer в течение 15 минут" },
+  { id: 5, name: "Буст до Платины", game: "CS2", category: "Услуги", price: 599, rarity: "rare", server: "EU", seller: "PhantomTrader", sellerRating: 4.9, verified: true, image: "🏆", description: "Буст рейтинга CS2 до ранга Platinum. Профессиональный игрок выполнит задание на вашем аккаунте.", delivery: "Начало работы в течение 2 часов после оплаты" },
+  { id: 6, name: "Скин AK-47 | Asiimov", game: "CS2", category: "Скины", price: 489, rarity: "epic", server: "EU", seller: "SkinVault", sellerRating: 4.6, verified: true, image: "🔫", description: "AK-47 | Asiimov в состоянии Field-Tested. Футуристический дизайн, один из самых популярных скинов.", delivery: "Через Steam Trade Offer в течение 15 минут" },
+  { id: 7, name: "TF2 Mann Co. Keys x10", game: "TF2", category: "Предметы", price: 199, rarity: "common", server: "Global", seller: "KeyTrader", sellerRating: 4.5, verified: false, image: "🔑", isNew: true, description: "10 ключей Mann Co. для Team Fortress 2. Используются для открытия ящиков и торговли.", delivery: "Через Steam Trade Offer в течение 15 минут" },
+  { id: 8, name: "Кристаллы 5000 шт", game: "Genshin Impact", category: "Валюта", price: 699, oldPrice: 900, rarity: "rare", server: "Asia", seller: "GenshinShop", sellerRating: 4.8, verified: true, image: "💎", isFlash: true, discount: 22, buyLink: "https://t.me/Svichmefces", description: "5000 первозданных камней для Genshin Impact (сервер Asia). Хватит на ~30 круток для получения персонажей.", delivery: "Пополнение через официальный магазин на ваш аккаунт. До 1 часа." },
 ];
 
 const CATEGORIES = [
@@ -95,64 +98,173 @@ function FlashTimer() {
   );
 }
 
-function ProductCard({ product }: { product: Product }) {
+function BuyModal({ product, onClose }: { product: Product; onClose: () => void }) {
   const rarity = RARITY_CONFIG[product.rarity];
+
+  const handleBuy = () => {
+    const link = product.buyLink || "https://t.me/Svichmefces";
+    window.open(link, "_blank", "noopener,noreferrer");
+  };
+
   return (
-    <div className="glass-card glass-card-hover rounded-xl overflow-hidden relative group">
-      {product.isFlash && (
-        <div className="absolute top-2 left-2 z-10 bg-gradient-to-r from-pink-600 to-purple-700 text-white font-orbitron text-[9px] font-bold tracking-widest px-2 py-0.5 rounded-sm uppercase">
-          ⚡ Флеш
-        </div>
-      )}
-      {product.isNew && !product.isFlash && (
-        <div className="absolute top-2 left-2 z-10 bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-orbitron text-[9px] font-bold tracking-widest px-2 py-0.5 rounded-sm uppercase">
-          ✦ Новое
-        </div>
-      )}
-      {product.verified && (
-        <div className="absolute top-2 right-2 z-10 verified-badge">✓ SVICH</div>
-      )}
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)" }}
+      onClick={onClose}>
+      <div className="glass-card rounded-2xl w-full max-w-md relative animate-fade-in opacity-0"
+        style={{ animationFillMode: "forwards", border: "1px solid rgba(255,0,153,0.35)", boxShadow: "0 0 40px rgba(255,0,153,0.2), 0 0 80px rgba(123,47,190,0.1)" }}
+        onClick={e => e.stopPropagation()}>
 
-      <div className="h-36 flex items-center justify-center relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, rgba(13,13,26,0.9), rgba(30,15,50,0.8))" }}>
-        <div className="absolute inset-0 cyber-grid opacity-50" />
-        <span className="text-6xl animate-float product-image-glow relative z-10">{product.image}</span>
-        <div className="absolute bottom-0 left-0 right-0 h-8"
-          style={{ background: "linear-gradient(0deg, rgba(13,13,26,0.9), transparent)" }} />
-      </div>
+        <button onClick={onClose}
+          className="absolute top-3 right-3 w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer border-0 z-10 transition-colors"
+          style={{ background: "rgba(255,255,255,0.05)" }}
+          onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,0,153,0.2)")}
+          onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.05)")}>
+          <Icon name="X" size={14} className="text-white/60" />
+        </button>
 
-      <div className="p-3 space-y-2">
-        <div className="flex items-center gap-1.5">
-          <span className={`text-[10px] font-orbitron font-bold border rounded-sm px-1.5 py-0.5 ${rarity.className}`}>
-            {rarity.icon} {rarity.label.toUpperCase()}
-          </span>
-          <span className="text-[10px] text-white/40 font-rubik ml-auto">{product.game}</span>
-        </div>
-        <div>
-          <h3 className="text-white font-rubik font-semibold text-sm leading-tight line-clamp-1">{product.name}</h3>
-          <p className="text-white/40 text-[10px] mt-0.5">{product.server} • {product.category}</p>
-        </div>
-        <div className="flex items-center gap-1">
-          <span className="text-[10px] text-yellow-400">{"★".repeat(Math.floor(product.sellerRating))}</span>
-          <span className="text-[10px] text-white/40">{product.seller}</span>
-        </div>
-        <div className="flex items-end justify-between pt-1">
-          <div>
-            <div className="price-tag text-white font-bold text-base">
-              {product.price.toLocaleString("ru-RU")} ₽
+        <div className="h-48 flex items-center justify-center relative overflow-hidden rounded-t-2xl"
+          style={{ background: "linear-gradient(135deg, rgba(13,13,26,0.95), rgba(40,15,65,0.9))" }}>
+          <div className="absolute inset-0 cyber-grid opacity-60" />
+          <div className="absolute inset-0"
+            style={{ background: "radial-gradient(ellipse at center, rgba(255,0,153,0.15), transparent 70%)" }} />
+          <span className="text-8xl animate-float product-image-glow relative z-10">{product.image}</span>
+          {product.isFlash && (
+            <div className="absolute top-3 left-3 bg-gradient-to-r from-pink-600 to-purple-700 text-white font-orbitron text-[9px] font-bold tracking-widest px-2 py-0.5 rounded-sm uppercase">
+              ⚡ Флеш -{product.discount}%
             </div>
-            {product.oldPrice && (
-              <div className="text-white/35 text-[10px] line-through font-rubik">
-                {product.oldPrice.toLocaleString("ru-RU")} ₽
-              </div>
-            )}
+          )}
+          {product.verified && (
+            <div className="absolute top-3 right-3 verified-badge">✓ SVICH</div>
+          )}
+        </div>
+
+        <div className="p-5 space-y-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className={`text-[10px] font-orbitron font-bold border rounded-sm px-1.5 py-0.5 ${rarity.className}`}>
+                {rarity.icon} {rarity.label.toUpperCase()}
+              </span>
+              <span className="text-[10px] text-white/40 font-rubik">{product.game} • {product.server}</span>
+            </div>
+            <h2 className="font-rubik text-white font-bold text-lg leading-tight">{product.name}</h2>
           </div>
-          <button className="btn-cyber-pink rounded-md px-3 py-1.5 text-[10px] cursor-pointer">
-            Купить
+
+          {product.description && (
+            <p className="text-white/55 text-sm font-rubik leading-relaxed">{product.description}</p>
+          )}
+
+          {product.delivery && (
+            <div className="flex items-start gap-2.5 rounded-lg p-3"
+              style={{ background: "rgba(0,255,255,0.05)", border: "1px solid rgba(0,255,255,0.15)" }}>
+              <span className="text-base shrink-0">⚡</span>
+              <div>
+                <div className="font-orbitron text-[10px] text-white/50 uppercase tracking-wider mb-0.5">Доставка</div>
+                <div className="text-white/70 text-xs font-rubik">{product.delivery}</div>
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-center gap-1.5 py-1">
+            <span className="text-yellow-400 text-xs">{"★".repeat(Math.floor(product.sellerRating))}</span>
+            <span className="text-white/50 text-xs font-rubik">{product.seller}</span>
+            {product.verified && <span className="text-[9px] neon-text-cyan font-orbitron ml-1">VERIFIED</span>}
+          </div>
+
+          <div className="flex items-end justify-between pt-1">
+            <div>
+              <div className="price-tag text-white font-black text-2xl">{product.price.toLocaleString("ru-RU")} ₽</div>
+              {product.oldPrice && (
+                <div className="text-white/35 text-sm line-through font-rubik">{product.oldPrice.toLocaleString("ru-RU")} ₽</div>
+              )}
+            </div>
+            <div className="text-right">
+              <div className="text-white/30 text-[10px] font-rubik">Защита покупателя</div>
+              <div className="neon-text-green text-[10px] font-orbitron">🛡️ ГАРАНТИЯ</div>
+            </div>
+          </div>
+
+          <button onClick={handleBuy}
+            className="btn-cyber-pink w-full rounded-xl py-3.5 text-sm cursor-pointer flex items-center justify-center gap-2">
+            <span>Купить в Telegram</span>
+            <Icon name="ExternalLink" size={14} className="text-white/80" />
           </button>
+
+          <p className="text-white/25 text-[10px] font-rubik text-center leading-relaxed">
+            Нажимая «Купить», вы перейдёте в Telegram к продавцу.<br/>
+            Средства защищены до подтверждения получения товара.
+          </p>
         </div>
       </div>
     </div>
+  );
+}
+
+function ProductCard({ product }: { product: Product }) {
+  const rarity = RARITY_CONFIG[product.rarity];
+  const [showModal, setShowModal] = useState(false);
+
+  return (
+    <>
+      {showModal && <BuyModal product={product} onClose={() => setShowModal(false)} />}
+      <div className="glass-card glass-card-hover rounded-xl overflow-hidden relative group cursor-pointer"
+        onClick={() => setShowModal(true)}>
+        {product.isFlash && (
+          <div className="absolute top-2 left-2 z-10 bg-gradient-to-r from-pink-600 to-purple-700 text-white font-orbitron text-[9px] font-bold tracking-widest px-2 py-0.5 rounded-sm uppercase">
+            ⚡ Флеш
+          </div>
+        )}
+        {product.isNew && !product.isFlash && (
+          <div className="absolute top-2 left-2 z-10 bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-orbitron text-[9px] font-bold tracking-widest px-2 py-0.5 rounded-sm uppercase">
+            ✦ Новое
+          </div>
+        )}
+        {product.verified && (
+          <div className="absolute top-2 right-2 z-10 verified-badge">✓ SVICH</div>
+        )}
+
+        <div className="h-36 flex items-center justify-center relative overflow-hidden"
+          style={{ background: "linear-gradient(135deg, rgba(13,13,26,0.9), rgba(30,15,50,0.8))" }}>
+          <div className="absolute inset-0 cyber-grid opacity-50" />
+          <span className="text-6xl animate-float product-image-glow relative z-10">{product.image}</span>
+          <div className="absolute bottom-0 left-0 right-0 h-8"
+            style={{ background: "linear-gradient(0deg, rgba(13,13,26,0.9), transparent)" }} />
+        </div>
+
+        <div className="p-3 space-y-2">
+          <div className="flex items-center gap-1.5">
+            <span className={`text-[10px] font-orbitron font-bold border rounded-sm px-1.5 py-0.5 ${rarity.className}`}>
+              {rarity.icon} {rarity.label.toUpperCase()}
+            </span>
+            <span className="text-[10px] text-white/40 font-rubik ml-auto">{product.game}</span>
+          </div>
+          <div>
+            <h3 className="text-white font-rubik font-semibold text-sm leading-tight line-clamp-1">{product.name}</h3>
+            <p className="text-white/40 text-[10px] mt-0.5">{product.server} • {product.category}</p>
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="text-[10px] text-yellow-400">{"★".repeat(Math.floor(product.sellerRating))}</span>
+            <span className="text-[10px] text-white/40">{product.seller}</span>
+          </div>
+          <div className="flex items-end justify-between pt-1">
+            <div>
+              <div className="price-tag text-white font-bold text-base">
+                {product.price.toLocaleString("ru-RU")} ₽
+              </div>
+              {product.oldPrice && (
+                <div className="text-white/35 text-[10px] line-through font-rubik">
+                  {product.oldPrice.toLocaleString("ru-RU")} ₽
+                </div>
+              )}
+            </div>
+            <button
+              className="btn-cyber-pink rounded-md px-3 py-1.5 text-[10px] cursor-pointer"
+              onClick={e => { e.stopPropagation(); setShowModal(true); }}>
+              Купить
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

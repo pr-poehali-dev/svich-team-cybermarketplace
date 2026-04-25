@@ -700,17 +700,23 @@ function ContactsPage() {
           {[
             { icon: "💬", title: "Поддержка 24/7", desc: "support@svichteam.gg", sub: "Ответим в течение часа" },
             { icon: "🔒", title: "Споры и возвраты", desc: "disputes@svichteam.gg", sub: "Решаем за 24 часа" },
-            { icon: "📢", title: "Telegram канал", desc: "@svichteam_official", sub: "Новости и акции" },
+            { icon: "📢", title: "Telegram канал", desc: "@Svichmefces", sub: "Новости и акции", link: "https://t.me/Svichmefces" },
             { icon: "🤝", title: "Сотрудничество", desc: "partner@svichteam.gg", sub: "Для продавцов и партнёров" },
           ].map(item => (
-            <div key={item.title} className="glass-card glass-card-hover rounded-xl p-5 flex items-start gap-4">
+            <a key={item.title} href={(item as { link?: string }).link ?? undefined} target="_blank" rel="noopener noreferrer"
+              className={`glass-card glass-card-hover rounded-xl p-5 flex items-start gap-4 block no-underline ${(item as { link?: string }).link ? "cursor-pointer" : ""}`}>
               <div className="text-2xl">{item.icon}</div>
-              <div>
+              <div className="flex-1">
                 <div className="font-orbitron text-white font-semibold text-sm">{item.title}</div>
                 <div className="neon-text-cyan text-xs font-rubik mt-0.5">{item.desc}</div>
                 <div className="text-white/35 text-[11px] font-rubik mt-0.5">{item.sub}</div>
               </div>
-            </div>
+              {(item as { link?: string }).link && (
+                <div className="shrink-0 self-center">
+                  <Icon name="ExternalLink" size={14} className="text-white/30 group-hover:text-white/60" />
+                </div>
+              )}
+            </a>
           ))}
         </div>
 

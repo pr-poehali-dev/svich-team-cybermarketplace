@@ -737,7 +737,142 @@ function AboutPage() {
   );
 }
 
+const TOPUP_AMOUNTS = [500, 1000, 2000, 5000];
+
+const TOPUP_METHODS = [
+  { id: "card", icon: "💳", label: "Банковская карта", sub: "Visa / Mastercard / МИР", color: "rgba(0,255,255,0.12)", border: "rgba(0,255,255,0.3)", glow: "rgba(0,255,255,0.18)" },
+  { id: "crypto", icon: "₿", label: "Криптовалюта", sub: "USDT · BTC · ETH · TON", color: "rgba(255,215,0,0.09)", border: "rgba(255,215,0,0.35)", glow: "rgba(255,215,0,0.18)" },
+  { id: "stars", icon: "✈️", label: "Telegram Stars", sub: "Оплата звёздами Telegram", color: "rgba(123,47,190,0.15)", border: "rgba(192,132,252,0.35)", glow: "rgba(192,132,252,0.18)" },
+];
+
+function TopUpModal({ onClose }: { onClose: () => void }) {
+  const [amount, setAmount] = useState(1000);
+  const [custom, setCustom] = useState("");
+  const [method, setMethod] = useState("card");
+
+  const finalAmount = custom ? Number(custom) : amount;
+  const selectedMethod = TOPUP_METHODS.find(m => m.id === method)!;
+
+  const handlePay = () => {
+    window.open("https://t.me/Svichmefces", "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.88)", backdropFilter: "blur(10px)" }}
+      onClick={onClose}>
+      <div className="glass-card rounded-2xl w-full max-w-md relative animate-fade-in opacity-0 overflow-y-auto max-h-[95vh]"
+        style={{ animationFillMode: "forwards", border: "1px solid rgba(0,255,255,0.3)", boxShadow: "0 0 40px rgba(0,255,255,0.12), 0 0 80px rgba(123,47,190,0.1)" }}
+        onClick={e => e.stopPropagation()}>
+
+        <button onClick={onClose}
+          className="absolute top-3 right-3 w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer border-0 z-10 transition-colors"
+          style={{ background: "rgba(255,255,255,0.05)" }}
+          onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,0,153,0.2)")}
+          onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.05)")}>
+          <Icon name="X" size={14} className="text-white/60" />
+        </button>
+
+        <div className="h-28 flex items-center justify-center relative overflow-hidden rounded-t-2xl"
+          style={{ background: "linear-gradient(135deg, rgba(13,13,26,0.95), rgba(15,40,65,0.95))" }}>
+          <div className="absolute inset-0 cyber-grid opacity-40" />
+          <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, rgba(0,255,255,0.1), transparent 70%)" }} />
+          <div className="relative z-10 text-center">
+            <div className="text-4xl mb-1">💎</div>
+            <div className="font-orbitron text-white font-bold text-sm tracking-wider">ПОПОЛНЕНИЕ БАЛАНСА</div>
+          </div>
+        </div>
+
+        <div className="p-5 space-y-5">
+          {/* Суммы */}
+          <div>
+            <div className="font-orbitron text-[10px] text-white/40 uppercase tracking-wider mb-2.5">Сумма пополнения</div>
+            <div className="grid grid-cols-4 gap-2 mb-3">
+              {TOPUP_AMOUNTS.map(a => (
+                <button key={a} onClick={() => { setAmount(a); setCustom(""); }}
+                  className="rounded-lg py-2 text-xs font-orbitron font-bold cursor-pointer border-0 transition-all"
+                  style={{
+                    background: amount === a && !custom ? "rgba(0,255,255,0.15)" : "rgba(255,255,255,0.04)",
+                    border: `1px solid ${amount === a && !custom ? "rgba(0,255,255,0.4)" : "rgba(255,255,255,0.07)"}`,
+                    color: amount === a && !custom ? "#00FFFF" : "rgba(255,255,255,0.5)",
+                    boxShadow: amount === a && !custom ? "0 0 12px rgba(0,255,255,0.15)" : "none",
+                  }}>
+                  {a.toLocaleString("ru-RU")} ₽
+                </button>
+              ))}
+            </div>
+            <input
+              type="number"
+              value={custom}
+              onChange={e => { setCustom(e.target.value); setAmount(0); }}
+              placeholder="Другая сумма, ₽"
+              min={100}
+              className="cyber-input w-full rounded-lg px-4 py-2.5 text-sm"
+            />
+          </div>
+
+          {/* Способ оплаты */}
+          <div>
+            <div className="font-orbitron text-[10px] text-white/40 uppercase tracking-wider mb-2.5">Способ оплаты</div>
+            <div className="space-y-2">
+              {TOPUP_METHODS.map(m => (
+                <button key={m.id} onClick={() => setMethod(m.id)}
+                  className="w-full flex items-center gap-3 rounded-xl px-4 py-3 cursor-pointer border-0 transition-all text-left"
+                  style={{
+                    background: method === m.id ? m.color : "rgba(255,255,255,0.02)",
+                    border: `1px solid ${method === m.id ? m.border : "rgba(255,255,255,0.07)"}`,
+                    boxShadow: method === m.id ? `0 0 15px ${m.glow}` : "none",
+                  }}>
+                  <span className="text-xl w-8 text-center">{m.icon}</span>
+                  <div className="flex-1">
+                    <div className="font-orbitron text-white text-xs font-semibold">{m.label}</div>
+                    <div className="text-white/40 text-[10px] font-rubik mt-0.5">{m.sub}</div>
+                  </div>
+                  <div className="w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-all"
+                    style={{
+                      borderColor: method === m.id ? m.border : "rgba(255,255,255,0.2)",
+                      background: method === m.id ? m.border : "transparent",
+                    }}>
+                    {method === m.id && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Итог */}
+          <div className="rounded-xl p-4 flex items-center justify-between"
+            style={{ background: "rgba(0,255,255,0.04)", border: "1px solid rgba(0,255,255,0.12)" }}>
+            <div>
+              <div className="text-white/40 text-[10px] font-rubik mb-0.5">К зачислению</div>
+              <div className="font-orbitron text-white font-black text-xl">
+                💎 {(finalAmount || 0).toLocaleString("ru-RU")} ₽
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-white/30 text-[10px] font-rubik">Защита</div>
+              <div className="text-green-400 text-[10px] font-orbitron">🛡️ ГАРАНТИЯ</div>
+            </div>
+          </div>
+
+          <button onClick={handlePay} disabled={!finalAmount || finalAmount < 100}
+            className="btn-cyber-pink w-full rounded-xl py-3.5 text-sm cursor-pointer flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed">
+            <span>Пополнить через {selectedMethod.label}</span>
+            <Icon name="ExternalLink" size={14} className="text-white/80" />
+          </button>
+
+          <p className="text-white/20 text-[10px] font-rubik text-center leading-relaxed">
+            Минимальная сумма — 100 ₽. Средства зачисляются мгновенно.<br/>
+            Вы будете перенаправлены в Telegram для подтверждения.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CabinetPage() {
+  const [showTopUp, setShowTopUp] = useState(false);
   const [chatInput, setChatInput] = useState("");
   const [messages, setMessages] = useState(CHAT_MESSAGES);
   const chatRef = useRef<HTMLDivElement>(null);
@@ -759,6 +894,8 @@ function CabinetPage() {
   };
 
   return (
+    <>
+      {showTopUp && <TopUpModal onClose={() => setShowTopUp(false)} />}
     <div className="min-h-screen py-24 max-w-7xl mx-auto px-4">
       <div className="mb-8">
         <h1 className="section-title text-white text-2xl mb-2">Личный кабинет</h1>
@@ -791,7 +928,8 @@ function CabinetPage() {
                 </div>
               ))}
             </div>
-            <button className="btn-cyber-pink w-full rounded-lg py-2 mt-4 cursor-pointer">
+            <button onClick={() => setShowTopUp(true)} className="btn-cyber-pink w-full rounded-lg py-2 mt-4 cursor-pointer flex items-center justify-center gap-2">
+              <Icon name="Plus" size={13} className="text-white/80" />
               Пополнить баланс
             </button>
           </div>
@@ -857,6 +995,7 @@ function CabinetPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
